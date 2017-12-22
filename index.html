@@ -1,0 +1,35 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>ClassViewer</title>
+</head>
+
+<body>
+    <input type="file" id="file" accept=".class" />
+    <button type="button" onclick="loadfile()">读取文件</button>
+</body>
+
+<script src="js/utils.js"></script>
+<script src="js/class_reader.js"></script>
+<script src="js/classfile.js"></script>
+
+<script>
+    function loadfile() {
+        var file = document.getElementById("file").files[0]
+
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var buffer = new Uint8Array(event.target.result)
+
+            var file = new ClassFile(buffer)
+
+            file.parse()
+        }
+        reader.readAsArrayBuffer(file)
+    }
+
+</script>
+
+</html>

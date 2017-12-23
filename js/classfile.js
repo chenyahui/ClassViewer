@@ -1,11 +1,10 @@
 class ClassFile {
     constructor(bytearray) {
-        log(bytearray.length)
         this.reader = new ClassReader(bytearray);
     }
 
     parse() {
-        this.checkMagicAndVersion()
+       this.checkMagicAndVersion()
     }
 
     checkMagicAndVersion() {

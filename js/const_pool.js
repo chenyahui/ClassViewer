@@ -1,0 +1,72 @@
+const ConstType = {
+    Klass: 7,
+    Fieldref: 9,
+    Methodref: 10,
+    InterfaceMethodref: 11,
+    String: 8,
+    Integer: 3,
+    Float: 4,
+    Long: 5,
+    Double: 6,
+    NameAndType: 12,
+    Utf8: 1,
+    MethodHandle: 15,
+    MethodType: 16,
+    InvokeDynamic: 18,
+}
+
+class ConstPool {
+    constructor() {
+        this.cpinfos = []
+    }
+
+    // @param reader classreader
+    read(reader) {
+        let count = reader.read(2)
+
+        for (let i = 1; i < count; ++i) {
+            let tag = reader.read(1);
+
+            let const_info = constInfoFactory(tag)
+            const_info.readinfo(reader)
+            
+            cpinfos[i] = const_info
+
+            if(tag == ConstType.Long || tag == ConstType.Double){
+				++i;
+			}
+        }
+    }
+    constInfoFactory(tag) {
+        switch (tag) {
+            case ConstType.Klass:
+                return new ConstKlassInfo(this);
+            case ConstType.Fieldref:
+                return new ConstFieldRefInfo(this);
+            case ConstType.Methodref:
+                return new ConstMethodRefInfo(this);
+            case ConstType.InterfaceMethodref:
+                return new ConstInterfaceMethodRefInfo(this);
+            case ConstType.String:
+                return new ConstStringInfo(this);
+            case ConstType.Integer:
+                return new ConstIntegerInfo(this);
+            case ConstType.Float:
+                return new ConstFloatInfo(this);
+            case ConstType.Double:
+                return new ConstDoubleInfo(this);
+            case ConstType.Long:
+                return new ConstLongInfo(this);
+            case ConstType.NameAndType:
+                return new ConstNameAndTypeInfo(this);
+            case ConstType.Utf8:
+                return new ConstUtf8Info(this);
+            case ConstType.MethodHandle:
+                return new ConstMethodHandleInfo(this);
+            case ConstType.MethodType:
+                return new ConstMethodTypeInfo(this);
+            case ConstType.InvokeDynamic:
+                return new ConstInvokeDynamicInfo(this);
+        }
+    }
+}

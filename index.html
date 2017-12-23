@@ -21,9 +21,7 @@
 
         var reader = new FileReader();
         reader.onload = function (event) {
-            var buffer = new Uint8Array(event.target.result)
-
-            var file = new ClassFile(buffer)
+            var file = new ClassFile(event.target.result)
 
             file.parse()
         }

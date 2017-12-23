@@ -14,12 +14,31 @@ class ClassReader {
         return result
     }
 
-    readarr(num_byte_len, item_byte_len){
-        let num = this.read(num_byte_len)
+    /*
+    @param num_type num的字节个数
+    @param item_type 每个元素的类型。当为int的时候，代表直接利用reader进行读取相应字节个数。
+                    当为字符串类型的时候，是一个对象的名字
+    */
+
+    readarr(num_type, item_type) {
+        let num = this.read(num_type)
         let result = []
 
         for (let i = 0; i < num; i++) {
-            result.push(this.read(item_byte_len))            
+
+            let item = ""
+
+            if (Number.isInteger(item_type)) {
+                item = this.read(item_type)
+            } else {
+                item = eval(`new ${item_type}()`)
+                item.read(this)
+            }
+
+            result.push(item)
         }
+
+        return result
     }
+
 }

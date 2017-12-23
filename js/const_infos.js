@@ -3,7 +3,7 @@ class ConstInfo {
         this.const_pool = const_pool
     }
 
-    readinfo(reader) {
+    read(reader) {
         if (this.properties != undefined) {
 
             for (let i = 0; i < this.properties.length; i += 2) {
@@ -13,7 +13,6 @@ class ConstInfo {
                 if (Array.isArray(len)) {
                     eval(`this.${property} = reader.readarr(${len[0]}, ${len[1]})`)
                 } else {
-
                     eval(`this.${property} = reader.read(${len})`)
                 }
             }
@@ -21,7 +20,7 @@ class ConstInfo {
         }
     }
 }
-class ConstClassInfo {
+class ConstClassInfo extends ConstInfo {
     constructor(const_pool) {
         super(const_pool)
         this.properties = [
@@ -30,7 +29,7 @@ class ConstClassInfo {
     }
 }
 
-class ConstMemberInfo {
+class ConstFieldRefInfo extends ConstInfo {
     constructor(const_pool) {
         super(const_pool)
         this.properties = [
@@ -39,8 +38,25 @@ class ConstMemberInfo {
         ]
     }
 }
-
-class ConstStringInfo {
+class ConstMethodRefInfo extends ConstInfo {
+    constructor(const_pool) {
+        super(const_pool)
+        this.properties = [
+            2, "class_index",
+            2, "name_and_type_index",
+        ]
+    }
+}
+class ConstInterfaceMethodRefInfo extends ConstInfo {
+    constructor(const_pool) {
+        super(const_pool)
+        this.properties = [
+            2, "class_index",
+            2, "name_and_type_index",
+        ]
+    }
+}
+class ConstStringInfo extends ConstInfo {
     constructor(const_pool) {
         super(const_pool)
         this.properties = [
@@ -49,7 +65,7 @@ class ConstStringInfo {
     }
 }
 
-class ConstFloatInfo {
+class ConstFloatInfo extends ConstInfo {
     constructor(const_pool) {
         super(const_pool)
         this.properties = [
@@ -58,7 +74,7 @@ class ConstFloatInfo {
     }
 }
 
-class ConstIntegerInfo {
+class ConstIntegerInfo extends ConstInfo {
     constructor(const_pool) {
         super(const_pool)
         this.properties = [
@@ -66,24 +82,26 @@ class ConstIntegerInfo {
         ]
     }
 }
-class ConstLongInfo {
+class ConstLongInfo extends ConstInfo {
     constructor(const_pool) {
         super(const_pool)
         this.properties = [
-            8, "val",
+            4, "high",
+            4, "low",
         ]
     }
 }
-class ConstDoubleInfo {
+class ConstDoubleInfo extends ConstInfo {
     constructor(const_pool) {
         super(const_pool)
         this.properties = [
-            8, "val",
+            4, "high",
+            4, "low",
         ]
     }
 }
 
-class ConstNameAndTypeInfo {
+class ConstNameAndTypeInfo extends ConstInfo {
     constructor(const_pool) {
         super(const_pool)
         this.properties = [
@@ -93,16 +111,21 @@ class ConstNameAndTypeInfo {
     }
 }
 
-class ConstUtf8Info {
+class ConstUtf8Info extends ConstInfo {
     constructor(const_pool) {
         super(const_pool)
         this.properties = [
             [2, 1], "data"
         ]
     }
+
+    asString() {
+        let params = this.data.join(",")
+        return eval(`String.fromCharCode(${params})`)
+    }
 }
 
-class ConstMethodHandle {
+class ConstMethodHandleInfo   extends ConstInfo{
     constructor(const_pool) {
         super(const_pool)
         this.properties = [
@@ -112,16 +135,16 @@ class ConstMethodHandle {
     }
 }
 
-class ConstMethodType {
+class ConstMethodTypeInfo   extends ConstInfo {
     constructor(const_pool) {
         super(const_pool)
         this.properties = [
-            2, "descriptor_index_",
+            2, "descriptor_index",
         ]
     }
 }
 
-class ConstInvokeDynamic {
+class ConstInvokeDynamicInfo   extends ConstInfo {
     constructor(const_pool) {
         super(const_pool)
         this.properties = [

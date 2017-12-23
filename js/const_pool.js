@@ -17,7 +17,7 @@ const ConstType = {
 
 class ConstPool {
     constructor() {
-        this.cpinfos = []
+        this.const_infos = []
     }
 
     // @param reader classreader
@@ -27,20 +27,32 @@ class ConstPool {
         for (let i = 1; i < count; ++i) {
             let tag = reader.read(1);
 
-            let const_info = constInfoFactory(tag)
-            const_info.readinfo(reader)
-            
-            cpinfos[i] = const_info
+            let const_info = this.constInfoFactory(tag)
+            const_info.read(reader)
 
-            if(tag == ConstType.Long || tag == ConstType.Double){
-				++i;
-			}
+            this.const_infos[i] = const_info
+
+            if (tag == ConstType.Long || tag == ConstType.Double) {
+                ++i;
+            }
         }
     }
+
+    getUtf8String(index) {
+        let utf8_info = this.const_infos[index]
+        // log(this, index, utf8_info)
+        return utf8_info.asString()
+    }
+
+    className(index) {
+        let class_info = this.const_infos[index]
+        return this.getUtf8String(class_info.name_index)
+    }
+
     constInfoFactory(tag) {
         switch (tag) {
             case ConstType.Klass:
-                return new ConstKlassInfo(this);
+                return new ConstClassInfo(this);
             case ConstType.Fieldref:
                 return new ConstFieldRefInfo(this);
             case ConstType.Methodref:

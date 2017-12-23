@@ -13,6 +13,9 @@
 
 <script src="js/utils.js"></script>
 <script src="js/class_reader.js"></script>
+<script src="js/const_infos.js"></script>
+<script src="js/const_pool.js"></script>
+<script src="js/attr_table.js"></script>
 <script src="js/classfile.js"></script>
 
 <script>
@@ -24,10 +27,28 @@
             var file = new ClassFile(event.target.result)
 
             file.parse()
+
+            printclass(file)
         }
         reader.readAsArrayBuffer(file)
     }
 
+    function printclass(klass) {
+        let const_pool = klass.const_pool
+
+        log("类名", const_pool.className(klass.this_class))
+        log("父类", const_pool.className(klass.super_class))
+
+        var printmember = (type, members) => {
+            log(type)
+            for (const member of members) {
+                log(const_pool.getUtf8String(member.name_index))
+            }
+        }
+
+        printmember("属性", klass.fields)
+        printmember("方法", klass.methods)
+    }
 </script>
 
 </html>

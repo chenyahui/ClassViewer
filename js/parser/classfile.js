@@ -42,18 +42,22 @@ class ClassFile {
         return result;
     }
     checkMagicAndVersion() {
-        var reader = this.reader
+        let reader = this.reader
 
-        var magic = reader.read(4)
+        let magic = reader.read(4)
         if (magic != 0xcafebabe) {
             alert("magic number is wrong")
             return;
         }
 
+        this.magic = magic
         log("magic number is right!")
 
         var minor = reader.read(2)
         var major = reader.read(2)
+
+        this.minor = minor
+        this.major = major
         log("major version", major)
         log("minor version", minor)
     }

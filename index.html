@@ -4,27 +4,101 @@
 <head>
     <meta charset="utf-8" />
     <title>ClassViewer</title>
+    <style>
+        .class-info>ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .class-info>ul>li {
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .wrapper>* {
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+            vertical-align: top;
+        }
+
+        main {
+            width: calc(100% - 450px);
+        }
+
+        aside.class-info {
+            width: 200px;
+        }
+
+        aside.detail-info {
+            width: 200px;
+        }
+    </style>
 </head>
 
 <body>
-    <input type="file" id="file" accept=".class" />
-    <button type="button" onclick="loadfile()">读取文件</button>
+
+    <header>
+        <input type="file" id="file" accept=".class" />
+        <button type="button" onclick="loadfile()">读取文件</button>
+    </header>
+    <div class="wrapper">
+
+        <aside class="class-info" style="background-color:red;">
+            <ul>
+                <li>
+                    magic:
+                    <span class="value">0xcafebabe</span>
+                </li>
+                <li>
+                    minorVersion:
+                    <span class="value">0</span>
+                </li>
+                <li>
+                    majorVersion:
+                    <span class="value">52</span>
+                </li>
+                <li>
+                    constantPoolCount:
+                    <span class="value">52</span>
+                </li>
+                <li class="has-children">
+                    constantPool
+                </li>
+
+            </ul>
+        </aside>
+        <main>
+            <canvas id="bytearea" width="600px" height="200px">
+
+            </canvas>
+        </main>
+        <aside class="detail-info" style="background-color:green">
+            测试
+        </aside>
+    </div>
 </body>
 
 <script src="js/utils.js"></script>
-<script src="js/class_reader.js"></script>
-<script src="js/const_infos.js"></script>
-<script src="js/const_pool.js"></script>
-<script src="js/attr_table.js"></script>
-<script src="js/classfile.js"></script>
+<script src="js/parser/class_reader.js"></script>
+<script src="js/parser/const_infos.js"></script>
+<script src="js/parser/const_pool.js"></script>
+<script src="js/parser/attr_table.js"></script>
+<script src="js/parser/classfile.js"></script>
+
+<script src="js/painter/byte_painter.js"></script>
 
 <script>
+    var buffer = []
     function loadfile() {
         var file = document.getElementById("file").files[0]
 
         var reader = new FileReader();
         reader.onload = function (event) {
-            var file = new ClassFile(event.target.result)
+            buffer = event.target.result
+
+            var file = new ClassFile(buffer.slice(0))
 
             file.parse()
 
@@ -48,6 +122,37 @@
 
         printmember("属性", klass.fields)
         printmember("方法", klass.methods)
+
+        showClass(klass)
+    }
+
+    function showClass(klass) {
+
+        // li_num 从0开始
+        let setValue = (li_num, value) => {
+            let dom = document.querySelector(`.class-info>ul>li:nth-child(${li_num}) > span.value`)
+
+            dom.value = value
+        }
+
+        setValue(1, klass.magic)
+        setValue(2, klass.minor)
+        setValue(3, klass.major)
+        setValue(4, klass.const_pool.length)
+    }
+
+    function paintByteArea() {
+        let data = []
+
+        for (let i = 0; i < 11; i++) {
+            data.push.apply(data, [0xca, 0xfe, 0xba, 0xbe])
+        }
+
+
+        let painter = new ByteAreaPainter("main", new Uint8Array(data))
+
+        painter.draw()
+        painter.highlight(10,20)
     }
 </script>
 

@@ -9,6 +9,7 @@ class ByteAreaPainter {
         this.row = 10
         this.box_l = 25
 
+        this.last_highlight = [0, 0]
         this.setup(wrapper_sel)
     }
 
@@ -42,12 +43,15 @@ class ByteAreaPainter {
     }
 
     draw() {
-        for (let i = 0; i < this.data.length; i++) {
-            this.drawItem(i)
-        }
+        this.drawRange(0, this.data.length)
     }
 
-    drawItem(index, bgcolor="#fff") {
+    drawRange(start, end, bgcolor = "#fff") {
+        for (let i = start; i < end; i++) {
+            this.drawItem(i, bgcolor)
+        }
+    }
+    drawItem(index, bgcolor) {
         let [x, y] = this.getCanvasCoord(index)
 
         log(x, y)
@@ -81,7 +85,7 @@ class ByteAreaPainter {
 
     drawText(text, x, y) {
         let ctx = this.ctx
-        
+
         x += 3
         y += 3
 
@@ -99,8 +103,14 @@ class ByteAreaPainter {
 
 
     highlight(start, end) {
-        for (let i = start; i < end; i++) {
-            this.drawItem(i, "#eee")
-        }
+
+        // 清除
+        this.drawRange(this.last_highlight[0], this.last_highlight[1])
+
+        // 高亮
+        this.drawRange(start, end, "#eee")
+
+        // 记录
+        this.last_highlight = [start, end]
     }
 }

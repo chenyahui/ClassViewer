@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <title>ClassViewer</title>
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/ztree/css/zTreeStyle.css" rel="stylesheet">
     <style>
         .class-info>ul {
             list-style: none;
@@ -23,6 +25,15 @@
             vertical-align: top;
         }
 
+        li>span:hover,
+        li.active {
+            background: blue;
+        }
+
+        span.value {
+            margin-left: 3px;
+        }
+
         main {
             width: calc(100% - 450px);
         }
@@ -34,40 +45,31 @@
         aside.detail-info {
             width: 200px;
         }
+
+        ul.sublist {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: block;
+        }
     </style>
 </head>
 
 <body>
 
     <header>
+        <span>
+            <i class="fa fa-upload" aria-hidden="true"></i>
+        </span>
         <input type="file" id="file" accept=".class" />
-        <button type="button" onclick="loadfile()">读取文件</button>
+
+        <button type="button" onclick="loadfile()">
+            </i>读取文件</button>
     </header>
     <div class="wrapper">
 
-        <aside class="class-info" style="background-color:red;">
-            <ul>
-                <li>
-                    magic:
-                    <span class="value">0xcafebabe</span>
-                </li>
-                <li>
-                    minorVersion:
-                    <span class="value">0</span>
-                </li>
-                <li>
-                    majorVersion:
-                    <span class="value">52</span>
-                </li>
-                <li>
-                    constantPoolCount:
-                    <span class="value">52</span>
-                </li>
-                <li class="has-children">
-                    constantPool
-                </li>
-
-            </ul>
+        <aside class="class-info">
+            <ul id="infoTree" class="ztree"></ul>
         </aside>
         <main>
             <canvas id="bytearea" width="600px" height="200px">
@@ -78,7 +80,13 @@
             测试
         </aside>
     </div>
+
 </body>
+
+<!--lib-->
+<script src="lib/jquery.min.js"></script>
+<script src="lib/ztree/js/jquery.ztree.core.min.js"></script>
+
 
 <script src="js/utils.js"></script>
 <script src="js/parser/class_reader.js"></script>
@@ -89,6 +97,9 @@
 
 <script src="js/painter/byte_painter.js"></script>
 
+<script src="js/dom.js"></script>
+<script src="js/show_class_info.js"></script>
+<script src=""></script>
 <script>
     var buffer = []
     function loadfile() {
@@ -126,19 +137,10 @@
         showClass(klass)
     }
 
+
     function showClass(klass) {
-
-        // li_num 从0开始
-        let setValue = (li_num, value) => {
-            let dom = document.querySelector(`.class-info>ul>li:nth-child(${li_num}) > span.value`)
-
-            dom.value = value
-        }
-
-        setValue(1, klass.magic)
-        setValue(2, klass.minor)
-        setValue(3, klass.major)
-        setValue(4, klass.const_pool.length)
+        let show = new ShowClassInfo(klass, "#infoTree")
+        show.show()
     }
 
     function paintByteArea() {
@@ -157,6 +159,7 @@
         // painter.highlight(10,20)
         // painter.highlight(20,30)
     }
+
 </script>
 
 </html>

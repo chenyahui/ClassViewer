@@ -18,17 +18,25 @@ const ConstType = {
 class ConstPool {
     constructor() {
         this.const_infos = []
+        this.range = []
     }
 
     // @param reader classreader
     read(reader) {
         let count = reader.read(2)
 
+        this.range[0] = reader.now
         for (let i = 1; i < count; ++i) {
-            let tag = reader.read(1);
+            let range = []
 
+            range[0] = reader.now
+            
+            let tag = reader.read(1);
             let const_info = this.constInfoFactory(tag)
             const_info.read(reader)
+
+            range[1] = reader.now
+            const_info.range = range
 
             this.const_infos[i] = const_info
 
@@ -36,6 +44,8 @@ class ConstPool {
                 ++i;
             }
         }
+
+        this.range[1] = reader.now
     }
 
     getUtf8String(index) {

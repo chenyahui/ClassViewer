@@ -7,6 +7,31 @@
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="lib/ztree/css/zTreeStyle.css" rel="stylesheet">
     <style>
+        /* 设置滚动条的样式 */
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        /* 滚动槽 */
+
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset006pxrgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        /* 滚动条滑块 */
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            -webkit-box-shadow: inset006pxrgba(0, 0, 0, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb:window-inactive {
+            background: rgba(255, 0, 0, 0.4);
+        }
+
         .class-info>ul {
             list-style: none;
             padding: 0;
@@ -23,6 +48,8 @@
             padding: 0;
             margin: 0;
             vertical-align: top;
+            overflow-y: scroll;
+            height: 500px;
         }
 
         li>span:hover,
@@ -40,6 +67,7 @@
 
         aside.class-info {
             width: 200px;
+            overflow-x: scroll;
         }
 
         aside.detail-info {
@@ -63,7 +91,7 @@
         </span>
         <input type="file" id="file" accept=".class" />
 
-        <button type="button" onclick="loadfile()">
+        <button type="button" onclick="new FileLoader().loadfile()">
             </i>读取文件</button>
     </header>
     <div class="wrapper">
@@ -87,35 +115,50 @@
 <script src="lib/jquery.min.js"></script>
 <script src="lib/ztree/js/jquery.ztree.core.min.js"></script>
 
-
 <script src="js/utils.js"></script>
+<script src="js/parser/access_flag.js"></script>
+<script src="js/parser/descriptor.js"></script>
 <script src="js/parser/class_reader.js"></script>
 <script src="js/parser/const_infos.js"></script>
 <script src="js/parser/const_pool.js"></script>
 <script src="js/parser/attr_table.js"></script>
 <script src="js/parser/classfile.js"></script>
 
-<script src="js/painter/byte_painter.js"></script>
+<script src="js/ui/byte_painter.js"></script>
+<script src="js/ui/show_class_info.js"></script>
 
-<script src="js/dom.js"></script>
-<script src="js/show_class_info.js"></script>
-<script src=""></script>
 <script>
-    var buffer = []
-    function loadfile() {
-        var file = document.getElementById("file").files[0]
-
-        var reader = new FileReader();
-        reader.onload = function (event) {
-            buffer = event.target.result
-
-            var file = new ClassFile(buffer.slice(0))
-
-            file.parse()
-
-            printclass(file)
+    class FileLoader {
+        constructor() {
+            this.buffer = []
         }
-        reader.readAsArrayBuffer(file)
+
+        loadfile() {
+            let self = this
+
+            var file = document.getElementById("file").files[0]
+            var reader = new FileReader();
+
+
+            reader.onload = function (event) {
+                self.buffer = event.target.result
+
+                var klass = new ClassFile(self.buffer.slice(0))
+                klass.parse()
+
+                self.showClass(klass)
+            }
+            reader.readAsArrayBuffer(file)
+        }
+
+        showClass(klass) {
+            let painter = new ByteAreaPainter("main", new Uint8Array(this.buffer))
+
+            let show = new ShowClassInfo(painter, klass, "#infoTree")
+            show.show()
+
+            // painter.draw()
+        }
     }
 
     function printclass(klass) {
@@ -141,6 +184,10 @@
     function showClass(klass) {
         let show = new ShowClassInfo(klass, "#infoTree")
         show.show()
+
+        let painter = new ByteAreaPainter("main", new Uint8Array(buffer))
+        painter.draw()
+
     }
 
     function paintByteArea() {

@@ -2,6 +2,8 @@ class ClassReader {
     // data is ArrayBuffer
     constructor(data) {
         this.data = data
+
+        this.now = 0
     }
 
     read(byte_num) {
@@ -11,6 +13,8 @@ class ClassReader {
 
         this.data = this.data.slice(byte_num)
 
+        this.now += byte_num
+        
         return result
     }
 

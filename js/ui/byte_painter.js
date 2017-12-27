@@ -1,5 +1,6 @@
 class ByteAreaPainter {
     constructor(wrapper_sel, buffer) {
+        this.wrapper_sel = wrapper_sel
         this.data = new Uint8Array(buffer)
 
         this.ctx = this.getctx(wrapper_sel + "> canvas")
@@ -54,20 +55,21 @@ class ByteAreaPainter {
     drawItem(index, bgcolor) {
         let [x, y] = this.getCanvasCoord(index)
 
-        log(x, y)
         this.drawBox(x, y, bgcolor)
 
         let text = this.uint8ToHex(this.data[index]).toUpperCase()
         this.drawText(text, x, y)
     }
 
-    drawBox(x, y, bgcolor) {
+    drawBox(x, y, border_color = "#fff") {
         let ctx = this.ctx
         ctx.clearRect(x, y, this.box_l, this.box_l)
 
-        ctx.fillStyle = bgcolor
+        ctx.strokeStyle = border_color
+        ctx.fillStyle = "#fff"
         ctx.lineWidth = 2;
         ctx.fillRect(x, y, this.box_l, this.box_l);
+        ctx.strokeRect(x, y, this.box_l, this.box_l);
     }
 
     getCoord(index) {
@@ -108,9 +110,18 @@ class ByteAreaPainter {
         this.drawRange(this.last_highlight[0], this.last_highlight[1])
 
         // 高亮
-        this.drawRange(start, end, "#eee")
+        this.drawRange(start, end, "red")
 
         // 记录
         this.last_highlight = [start, end]
+
+        // 滚动
+        this.scrollTo(start)
+        
+    }
+
+    scrollTo(index) {
+        let [x, y] = this.getCanvasCoord(index)
+        $(this.wrapper_sel).scrollTop(y)
     }
 }

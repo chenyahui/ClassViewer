@@ -83,9 +83,9 @@ class AttrInfo {
                     // 当属性是个对象的时候
                     eval(`this.${property} = new ${item_type}()`)
 
-                    if(item_type == "AttrTable"){
+                    if (item_type == "AttrTable") {
                         eval(`this.${property}.read(reader, this.const_pool)`)
-                    }else{
+                    } else {
                         eval(`this.${property}.read(reader)`)
                     }
                 }
@@ -323,4 +323,13 @@ class MemberInfo extends AttrInfo {
             "AttrTable", "attr_table",
         ]
     }
+
+    member_name() {
+        return this.const_pool.getUtf8String(this.name_index)
+    }
+
+    descriptor_name(){
+        return this.const_pool.getUtf8String(this.descriptor_index)
+    }
 }
+

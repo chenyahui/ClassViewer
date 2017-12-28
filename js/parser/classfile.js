@@ -33,9 +33,12 @@ class ClassFile {
         let result = []
 
         for (let i = 0; i < count; ++i) {
+            let start = reader.now
 
             let member = new MemberInfo(this.const_pool)
             member.read(reader);
+
+            member.range = [start, reader.now]
             result[i] = member;
         }
 

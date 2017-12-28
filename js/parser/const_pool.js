@@ -34,6 +34,7 @@ class ConstPool {
             let tag = reader.read(1);
             let const_info = this.constInfoFactory(tag)
             const_info.read(reader)
+            const_info.tag = tag
 
             range[1] = reader.now
             const_info.range = range

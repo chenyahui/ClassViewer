@@ -5,12 +5,17 @@ class AttrTable {
 
     read(reader, const_pool) {
         let count = reader.read(2)
-
+        let table_start = reader.now
         for (let i = 0; i < count; ++i) {
-            let attr_info = this.readAttributeInfo(reader, const_pool)
+            let start = reader.now
 
+            let attr_info = this.readAttributeInfo(reader, const_pool)
+            attr_info.range = [start, reader.now]
+           
             this.attr_infos.push(attr_info)
         }
+
+        this.range = [table_start, reader.now]
     }
 
     readAttributeInfo(reader, const_pool) {

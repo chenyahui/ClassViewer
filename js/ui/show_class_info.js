@@ -283,7 +283,6 @@ class ClassInfoToZtreeNode {
     }
 
     parseStruct(name, stru_arr, start) {
-        log(name, stru_arr, start)
         let end = start
         let arr_children = []
 
@@ -330,37 +329,3 @@ class ClassInfoToZtreeNode {
 
 }
 
-class ShowClassInfo {
-    constructor(painter, klass, ztree_id) {
-        this.painter = painter
-
-        this.class_converter = new ClassInfoToZtreeNode(klass)
-
-        let self = this
-        this.ztree_setting = {
-            callback: {
-                onClick: (e, i, t) => { self.onclick(e, i, t) }
-            }
-        }
-
-        this.ztree_id = ztree_id
-    }
-
-    show() {
-        let znodes = this.class_converter.convert()
-
-        $.fn.zTree.init($(this.ztree_id), this.ztree_setting, znodes);
-
-        this.painter.draw()
-    }
-
-    onclick(event, treeId, treeNode) {
-        log(event, treeId, treeNode)
-
-        let range = treeNode["range"]
-        if (range != undefined && range.length != 0) {
-            this.painter.highlight(range[0], range[1])
-        }
-
-    }
-}

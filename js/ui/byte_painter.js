@@ -7,7 +7,7 @@ class ByteAreaPainter {
 
         this.canvas = this.querysel(wrapper_sel + "> canvas")
 
-        this.row = 10
+        this.col = 10
         this.box_l = 25
 
         this.last_highlight = [0, 0]
@@ -20,13 +20,13 @@ class ByteAreaPainter {
         let resizeCanvas = () => {
             let rect = this.querysel(sel).getBoundingClientRect()
 
-            this.canvas.width = rect.width
+            this.canvas.width = rect.width - 5
 
-            this.row = parseInt(this.canvas.width / this.box_l)
+            this.col = parseInt(this.canvas.width / this.box_l)
 
-            let col = Math.ceil(this.data.length / this.row)
+            let row = Math.ceil(this.data.length / this.col)
 
-            this.canvas.height = col * this.box_l + 20
+            this.canvas.height = row * this.box_l + 20
         }
 
         window.addEventListener('resize', resizeCanvas, false);
@@ -73,8 +73,8 @@ class ByteAreaPainter {
     }
 
     getCoord(index) {
-        let y = parseInt(index / this.row)
-        let x = index % this.row
+        let y = parseInt(index / this.col)
+        let x = index % this.col
 
         return [x, y]
     }

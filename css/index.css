@@ -1,0 +1,111 @@
+ /* 设置滚动条的样式 */
+
+ ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #1c90f3;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    border-bottom: 1px solid black;
+}
+
+.mainarea {
+    display: none;
+}
+
+.wrapper>* {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+}
+
+
+main {
+    width: calc(100% - 450px);
+}
+
+.class-info {
+    width: 200px;
+    overflow: scroll;
+}
+
+/* .class-info,
+.detail-info,
+#bytearea {
+    overflow: auto;
+} */
+
+#bytearea {
+    overflow-y: scroll;
+    overflow-x: auto;
+}
+
+.detail-info {
+    width: 200px;
+}
+
+ul.sublist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+.statusbar {
+    height: 50px;
+    border-top: 1px solid #eee;
+}
+
+.index {
+    width: 100%;
+    text-align: center;
+}
+
+.uploader {
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    border: 2px dashed #eee;
+    margin: 50px auto 0;
+    cursor: pointer;
+}
+
+.uploader i.fa {
+    font-size: 80px;
+    color: #00B7EE;
+    margin-top: 45px;
+}
+
+.logo {
+    font-family: Baskerville;
+    font-size: 50px;
+    margin-top: 50px;
+    font-weight: bold;
+}
+
+.iziModal {
+    box-shadow: none;
+}
+
+#loading-modal {
+    background: transparent;
+    text-align: center
+}
+
+#loading-modal span.loading-text {
+    font-size: 20px;
+}

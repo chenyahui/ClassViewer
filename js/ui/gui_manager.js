@@ -22,10 +22,6 @@ class GuiManager {
         this.ztree_obj = $.fn.zTree.init($(this.ztree_id), this.ztree_setting, znodes);
 
         this.painter.draw()
-
-        // this.ztree_obj.expandAll(true)
-
-       
     }
 
     onExpand() {

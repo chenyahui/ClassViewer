@@ -6,6 +6,7 @@ class ClassInfoToZtreeNode {
     }
 
     convert() {
+        var start_time = new Date().getTime();
         this.append("magic", [], [0, 4])
         this.append("minor_version:" + this.klass.minor, [], [4, 6])
         this.append("major_version:" + this.klass.major, [], [6, 8])
@@ -31,7 +32,8 @@ class ClassInfoToZtreeNode {
         let attrs = this.parseAttributes(this.klass.attribute_table, this.method_end)
 
         this.appendArray(this.result, attrs)
-
+        var end_time = new Date().getTime();
+        console.log("convert耗时", end_time - start_time);
         return this.result
     }
 

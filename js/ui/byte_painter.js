@@ -18,12 +18,13 @@ class ByteAreaPainter {
         let ctx = this.ctx
 
         let resizeCanvas = () => {
-            let rect = this.querysel(sel).getBoundingClientRect()
-
-            this.canvas.width = rect.width - 5
-
+            let wrapper = this.querysel(sel)
+            let width =  parseInt(wrapper.style.width.slice(0, -2))
+            // let rect = this.querysel(sel).getBoundingClientRect()
+            // log(rect)
+            this.canvas.width = width - 5
             this.col = parseInt(this.canvas.width / this.box_l)
-
+            log(this.col)
             let row = Math.ceil(this.data.length / this.col)
 
             this.canvas.height = row * this.box_l + 20
@@ -117,7 +118,7 @@ class ByteAreaPainter {
 
         // 滚动
         this.scrollTo(start)
-        
+
     }
 
     scrollTo(index) {

@@ -54,14 +54,12 @@ class ClassFile {
         }
 
         this.magic = magic
-        log("magic number is right!")
 
         var minor = reader.read(2)
         var major = reader.read(2)
 
         this.minor = minor
         this.major = major
-        log("major version", major)
-        log("minor version", minor)
+        
     }
 }

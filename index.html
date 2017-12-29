@@ -106,6 +106,15 @@
 
 <script>
 
+    function showMainArea() {
+        $(".index").hide()
+        $(".mainarea").show()
+    }
+    function showIndexArea() {
+        $(".mainarea").hide()
+        $(".index").show()
+    }
+
     function _Main() {
         $("#loading-modal").iziModal({
             overlayClose: false,
@@ -116,6 +125,7 @@
             $("#fileInput").trigger("click")
 
         })
+
         let fileLoader = new FileLoader()
 
         adjust_size()
@@ -125,32 +135,16 @@
             let self = this
 
             async function loadfile(file) {
-                fileLoader.loadfile(file).then(function () {
-                    $(".index").hide()
-                    $(".mainarea").show()
-                    $("#loading-modal").iziModal('close');
-                    
-                })
+                fileLoader.loadfile(file)
+                    .then(function () {
+                        $(self).val(null)
+                        showMainArea()
+                        $("#loading-modal").iziModal('close');
+                    })
             }
 
             loadfile(self.files[0])
-
-            //  $(".index").hide()
-            //  $(".mainarea").show()
-            //  $("#loading-modal").iziModal('close');
-            // // clear value, avoid change event become invalid
-            // $("#fileInput").val("")
-
-            // $(".index").hide()
-            // $(".mainarea").show()
-            // // $("#loading-modal").iziModal('close');
-            // // clear value, avoid change event become invalid
-            // $("#fileInput").val("")
-
-            // adjust_size()
-
         })
-
     }
 
 

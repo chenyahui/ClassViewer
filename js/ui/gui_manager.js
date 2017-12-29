@@ -8,12 +8,9 @@ class GuiManager {
         this.ztree_setting = {
             callback: {
                 onClick: (e, i, t) => { self.onclick(e, i, t) },
-                onExpand: () => { self.onExpand() }
             }
         }
-
         this.ztree_id = ztree_id
-
     }
 
     show() {
@@ -24,15 +21,15 @@ class GuiManager {
         this.painter.draw()
     }
 
-    onExpand() {
-        $("aside.class-info").getNiceScroll().onResize();
-    }
-
     onclick(event, treeId, treeNode) {
+        log(event)
         let range = treeNode["range"]
         // 高亮
         if (range != undefined && range.length != 0) {
             this.painter.highlight(range[0], range[1])
         }
+
+        //显示range
+        $(".statusbar").text(`range: ${range[0]}, ${range[1]}`)
     }
 }

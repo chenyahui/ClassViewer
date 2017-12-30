@@ -127,3 +127,34 @@ ul.sublist {
 #loading-modal span.loading-text {
     font-size: 20px;
 }
+
+.ztree li {
+    margin-top: 10px;
+}
+
+.ztree li span.button.switch {
+    margin-right: 4px;
+    top: -4px;
+    position: relative;
+}
+
+.ztree li span.button.ico_docu {
+    background: url("../image/property.png");
+    background-repeat: no-repeat;
+}
+
+.ztree li span.button.ico_close,
+.ztree li span.button.ico_open {
+    background: url("../image/folder.png");
+    background-repeat: no-repeat;
+}
+
+.ztree li span.button.noline_open {
+    background: url("../image/arrow-down.png");
+    background-repeat: no-repeat;
+}
+
+.ztree li span.button.noline_close {
+    background: url("../image/arrow-right.png");
+    background-repeat: no-repeat;
+}

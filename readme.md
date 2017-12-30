@@ -9,11 +9,11 @@ Since it only depends on browser,you can download source code from github, Open 
 ![image](example/welcome.png)
 ![image](example/show.png)
 
-
 ## TODO
-* redraw bytecode area when resize window 
-* show opcode of method 
-* try to explain every part of classfile
+* Redraw bytecode area when resize window 
+* Show opcode of method 
+* Try to explain every part of classfile
+* Compatible with most browsers
 
 ## Reference
 * [javap](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javap.html)

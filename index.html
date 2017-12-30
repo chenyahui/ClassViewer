@@ -1,7 +1,8 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
 
 <head>
+    <meta name="renderer" content="webkit">
     <meta charset="utf-8" />
     <title>ClassViewer</title>
     <link href="lib/ztree/css/zTreeStyle.css" rel="stylesheet">
@@ -12,13 +13,13 @@
 </head>
 
 <body>
-
+    <span id="suggest">Suggest to open in chrome!</span>
     <div class="index">
+
         <a href="https://github.com/chenyahui/ClassViewer">
             <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67"
                 alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png">
         </a>
-
         <div class="logo">
             <span style="color:#34A853">Class</span>
             <span style="color:#EA4335">Viewer</span>
@@ -83,31 +84,31 @@
 
             </aside>
         </div>
+    </div>
+    <!--lib-->
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/ztree/js/jquery.ztree.core.min.js"></script>
+    <script src="lib/iziModal/iziModal.min.js"></script>
+
+    <script src="js/utils.js"></script>
+
+    <script src="js/parser/access_flag.js"></script>
+    <script src="js/parser/descriptor.js"></script>
+    <script src="js/parser/class_reader.js"></script>
+    <script src="js/parser/const_infos.js"></script>
+    <script src="js/parser/const_pool.js"></script>
+    <script src="js/parser/attr_table.js"></script>
+    <script src="js/parser/classfile.js"></script>
+
+    <script src="js/ui/byte_painter.js"></script>
+    <script src="js/ui/show_class_info.js"></script>
+    <script src="js/ui/gui_manager.js"></script>
+
+    <script src="js/main.js"></script>
+    <script>
+        _Main()
+    </script>
+
 </body>
-
-<!--lib-->
-<script src="lib/jquery.min.js"></script>
-<script src="lib/ztree/js/jquery.ztree.core.min.js"></script>
-<script src="lib/iziModal/iziModal.min.js"></script>
-
-<script src="js/utils.js"></script>
-
-<script src="js/parser/access_flag.js"></script>
-<script src="js/parser/descriptor.js"></script>
-<script src="js/parser/class_reader.js"></script>
-<script src="js/parser/const_infos.js"></script>
-<script src="js/parser/const_pool.js"></script>
-<script src="js/parser/attr_table.js"></script>
-<script src="js/parser/classfile.js"></script>
-
-<script src="js/ui/byte_painter.js"></script>
-<script src="js/ui/show_class_info.js"></script>
-<script src="js/ui/gui_manager.js"></script>
-
-<script src="js/main.js"></script>
-
-<script>
-    _Main()
-</script>
 
 </html>

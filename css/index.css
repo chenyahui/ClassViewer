@@ -158,3 +158,11 @@ ul.sublist {
     background: url("../image/arrow-right.png");
     background-repeat: no-repeat;
 }
+
+#suggest{
+    background: red;
+    width: 100%;
+    color: white;
+    text-align: center;
+    display: none;
+}

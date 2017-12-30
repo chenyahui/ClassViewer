@@ -56,7 +56,16 @@ function adjust_size() {
     $("#bytearea").height(wrapper_height - $(".statusBar").height())
     $("#bytearea").width($("main").width())
 }
+
+function isSupport() {
+    let userAgent = navigator.userAgent;
+    return userAgent.indexOf("Chrome") > -1
+}
+
 function _Main() {
+    if (!isSupport()) {
+        $("#suggest").css("display", "block")
+    }
     $("#loading-modal").iziModal({
         overlayClose: false,
         closeOnEscape: false,

@@ -1,5 +1,7 @@
  /* 设置滚动条的样式 */
-
+*{
+    font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+}
  ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
@@ -19,9 +21,23 @@ body {
 }
 
 header {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #eee;
+    padding: 5px 10px 5px 5px;
+    font-size: 16px;
+}
+#classname {
+    margin-right: 20px;
 }
 
+#changeClass {
+    color: #1c90f3;
+}
+#gotoGithub{
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
 .mainarea {
     display: none;
 }
@@ -68,6 +84,7 @@ ul.sublist {
 .statusbar {
     height: 50px;
     border-top: 1px solid #eee;
+    padding: 25px 10px 10px 10px;
 }
 
 .index {
@@ -103,7 +120,8 @@ ul.sublist {
 
 #loading-modal {
     background: transparent;
-    text-align: center
+    text-align: center;
+    color: #fff;
 }
 
 #loading-modal span.loading-text {

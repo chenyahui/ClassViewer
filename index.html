@@ -9,6 +9,38 @@
     <link href="lib/iziModal/iziModal.min.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
     <link href="css/loading.css" rel="stylesheet">
+    <style>
+        .ztree li {
+            margin-top: 10px;
+        }
+
+        .ztree li span.button.switch {
+            margin-right: 4px;
+            top: -4px;
+            position: relative;
+        }
+
+        .ztree li span.button.ico_docu {
+            background: url("image/property.png");
+            background-repeat: no-repeat;
+        }
+
+        .ztree li span.button.ico_close,
+        .ztree li span.button.ico_open {
+            background: url("image/folder.png");
+            background-repeat: no-repeat;
+        }
+
+        .ztree li span.button.noline_open {
+            background: url("image/arrow-down.png");
+            background-repeat: no-repeat;
+        }
+
+        .ztree li span.button.noline_close {
+            background: url("image/arrow-right.png");
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
 
 <body>
@@ -57,13 +89,14 @@
     </div>
     <div class="mainarea">
         <header>
-            <span>
-                <i class="fa fa-upload" aria-hidden="true"></i>
+            <span id="classname">
+                Test.class
             </span>
-            <input type="file" id="file" accept=".class" />
+            <a href="#" id="changeClass">select another</a>
 
-            <button type="button" onclick="new FileLoader().loadfile()">
-                </i>读取文件</button>
+            <a href="https://github.com/chenyahui/ClassViewer" target="_blank" id="gotoGithub">
+                <i class="fa fa-github"></i>
+            </a>
         </header>
         <div class="wrapper">
             <aside class="class-info">
@@ -90,6 +123,7 @@
 <script src="lib/iziModal/iziModal.min.js"></script>
 
 <script src="js/utils.js"></script>
+
 <script src="js/parser/access_flag.js"></script>
 <script src="js/parser/descriptor.js"></script>
 <script src="js/parser/class_reader.js"></script>
@@ -105,49 +139,6 @@
 <script src="js/main.js"></script>
 
 <script>
-
-    function showMainArea() {
-        $(".index").hide()
-        $(".mainarea").show()
-    }
-    function showIndexArea() {
-        $(".mainarea").hide()
-        $(".index").show()
-    }
-
-    function _Main() {
-        $("#loading-modal").iziModal({
-            overlayClose: false,
-            closeOnEscape: false,
-        })
-
-        $(".uploader").click(function () {
-            $("#fileInput").trigger("click")
-
-        })
-
-        let fileLoader = new FileLoader()
-
-        adjust_size()
-
-        $("#fileInput").change(function () {
-            $("#loading-modal").iziModal('open');
-            let self = this
-
-            async function loadfile(file) {
-                fileLoader.loadfile(file)
-                    .then(function () {
-                        $(self).val(null)
-                        showMainArea()
-                        $("#loading-modal").iziModal('close');
-                    })
-            }
-
-            loadfile(self.files[0])
-        })
-    }
-
-
     _Main()
 </script>
 

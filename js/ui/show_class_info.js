@@ -46,6 +46,7 @@ class ClassInfoToZtreeNode {
         let children = []
         for (let i = 0; i < count; i++) {
             let member = this.parseMember(members[i], type, i)
+            member.icon = `image/${type}.png`
             children.push(member)
             end = member.range[1]
         }
@@ -114,7 +115,8 @@ class ClassInfoToZtreeNode {
             let name = this.klass.const_pool.className(index)
             children.push({
                 name: `#${i + 1} -> ${name}`,
-                range: [end, end + 2]
+                range: [end, end + 2],
+                icon: "image/classTypeInterface.png",
             })
 
             end += 2
@@ -127,16 +129,19 @@ class ClassInfoToZtreeNode {
         let index = eval(`this.klass.${type}_class`)
         let name = this.klass.const_pool.className(index)
 
-        this.append(`${type}_class: ${index} -> ${name}`, [], range)
+        this.append(`${type}_class: ${index} -> ${name}`, [], range, "image/classTypeJavaClass.png")
     }
 
-    append(name, children = [], range = []) {
-        this.result.push({
+    append(name, children = [], range = [], icon) {
+        let item = {
             name: name,
             range: range,
             children: children,
-            showIcon: children.length == 0 ? false : true,
-        })
+        }
+        if (icon) {
+            item["icon"] = icon
+        }
+        this.result.push(item)
     }
 
     appendConstPool() {

@@ -37,6 +37,7 @@ header {
     font-size: 20px;
     cursor: pointer;
     text-decoration: none;
+    color: #000;
 }
 .mainarea {
     display: none;

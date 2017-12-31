@@ -10,7 +10,9 @@ class ClassFile {
     parse() {
         let reader = this.reader
 
-        this.checkMagicAndVersion()
+        if(!this.checkMagicAndVersion()){
+            return false
+        }
 
         this.const_pool.read(reader)
 
@@ -49,8 +51,8 @@ class ClassFile {
 
         let magic = reader.read(4)
         if (magic != 0xcafebabe) {
-            alert("magic number is wrong")
-            return;
+            log("magic number is wrong")
+            return false;
         }
 
         this.magic = magic
@@ -60,6 +62,7 @@ class ClassFile {
 
         this.minor = minor
         this.major = major
-        
+
+        return true
     }
 }

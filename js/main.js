@@ -7,6 +7,10 @@ class FileLoader {
         let self = this
 
         return new Promise(function (resolve, reject) {
+            let abs_filename = file.name
+            if (!abs_filename.endsWith(".class")) {
+                reject("the file must end with .class")
+            }
 
             var reader = new FileReader();
 
@@ -14,11 +18,15 @@ class FileLoader {
                 self.buffer = event.target.result
 
                 var klass = new ClassFile(self.buffer.slice(0))
-                klass.parse()
+                if (!klass.parse()) {
+                    reject("invalid class file")
+                }
 
-                let filename = self.parseFileName(file.name)
+                let filename = self.parseFileName(abs_filename)
+
+
                 self.showClass(klass, filename)
-                log("完成")
+
                 resolve()
             }
 
@@ -94,8 +102,13 @@ function _Main() {
         async function loadfile(file) {
             fileLoader.loadfile(file)
                 .then(function () {
-                    $(self).val(null)
                     showMainArea()
+                })
+                .catch(function (error) {
+                    alert(error)
+                }).then(function () {
+                    // always 
+                    $(self).val(null)
                     $("#loading-modal").iziModal('close');
                 })
         }

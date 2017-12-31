@@ -26,6 +26,8 @@ class ClassFile {
         this.methods = this.readMembers()
 
         this.attribute_table.read(this.reader, this.const_pool)
+
+        return true
     }
 
     readMembers() {

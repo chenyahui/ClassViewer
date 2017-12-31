@@ -22,8 +22,9 @@ class GuiManager {
         this.ztree_obj = $.fn.zTree.init($(this.ztree_id), this.ztree_setting, znodes);
 
         this.painter.draw()
-        
+
         $("#classname").text(this.filename)
+        $("#totalCount").text("Total : " + this.painter.data.length)
     }
 
     onclick(event, treeId, treeNode) {
@@ -34,6 +35,6 @@ class GuiManager {
         }
 
         //显示range
-        $(".statusbar").text(`range: ${range[0]}, ${range[1]}`)
+        $("#range").text(`range: [${range[0]}, ${range[1]}]`)
     }
 }

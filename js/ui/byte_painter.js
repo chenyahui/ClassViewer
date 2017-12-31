@@ -24,7 +24,7 @@ class ByteAreaPainter {
             // log(rect)
             this.canvas.width = width - 5
             this.col = parseInt(this.canvas.width / this.box_l)
-            log(this.col)
+            // log(this.col)
             let row = Math.ceil(this.data.length / this.col)
 
             this.canvas.height = row * this.box_l + 20

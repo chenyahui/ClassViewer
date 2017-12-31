@@ -1,50 +1,3 @@
-class FileLoader {
-    constructor() {
-        this.buffer = []
-    }
-
-    loadfile(file) {
-        let self = this
-
-        return new Promise(function (resolve, reject) {
-            let abs_filename = file.name
-            if (!abs_filename.endsWith(".class")) {
-                reject("the file must end with .class")
-            }
-
-            var reader = new FileReader();
-
-            reader.onload = function (event) {
-                self.buffer = event.target.result
-
-                var klass = new ClassFile(self.buffer.slice(0))
-                if (!klass.parse()) {
-                    reject("invalid class file")
-                }
-
-                let filename = self.parseFileName(abs_filename)
-
-
-                self.showClass(klass, filename)
-
-                resolve(true)
-            }
-
-            reader.readAsArrayBuffer(file)
-        })
-    }
-    parseFileName(abs_filename) {
-        return abs_filename
-    }
-
-    showClass(klass, filename) {
-        let painter = new ByteAreaPainter("#bytearea", new Uint8Array(this.buffer))
-
-        let show = new GuiManager(painter, klass, "#infoTree", filename)
-        show.show()
-    }
-}
-
 function showMainArea() {
     $(".index").hide()
     $(".mainarea").show()
@@ -56,18 +9,24 @@ function showIndexArea() {
 }
 
 function adjust_size() {
-    $(".wrapper").height($("body").height() - $("header").height() - 10)
+
+    let window_h = window.innerHeight - 60
+
+    $(".wrapper").height(window_h - $("header").height() - 10)
     let wrapper_height = $(".wrapper").height()
     $(".wrapper > *").height(wrapper_height)
 
     $("main").width($("body").width() - $(".class-info").width() - $(".detail-info").width() - 20)
-    $("#bytearea").height(wrapper_height - $(".statusBar").height())
+
+    let status_h = 50
+
+    $("#bytearea").height(wrapper_height - status_h)
     $("#bytearea").width($("main").width())
 }
 
 function isSupport() {
-    let userAgent = navigator.userAgent;
-    return userAgent.indexOf("Chrome") > -1
+    // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+    return !!window.chrome && !!window.chrome.webstore;
 }
 
 function _Main() {
@@ -90,11 +49,13 @@ function _Main() {
 
     $(window).resize(function () {
         alert("Resizing window will erase byte area!")
+        adjust_size()
     })
 
     adjust_size()
 
     let fileLoader = new FileLoader()
+
     $("#fileInput").change(function () {
         $("#loading-modal").iziModal('open');
         let self = this

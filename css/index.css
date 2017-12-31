@@ -82,9 +82,9 @@ ul.sublist {
 }
 
 .statusbar {
-    height: 50px;
     border-top: 1px solid #eee;
     padding: 25px 10px 10px 10px;
+    height: 50px;
 }
 
 .index {

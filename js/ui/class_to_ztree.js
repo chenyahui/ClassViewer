@@ -135,7 +135,7 @@ class ClassInfoToZtreeNode {
             range: range,
             children: children,
         }
-        if (icon) {
+        if (icon != undefined) {
             item["icon"] = icon
         }
         this.result.push(item)

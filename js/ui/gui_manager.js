@@ -27,7 +27,6 @@ class GuiManager {
     }
 
     onclick(event, treeId, treeNode) {
-        log(event)
         let range = treeNode["range"]
         // 高亮
         if (range != undefined && range.length != 0) {

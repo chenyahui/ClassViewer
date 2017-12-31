@@ -48,8 +48,9 @@ function _Main() {
     })
 
     $(window).resize(function () {
-        alert("Resizing window will erase byte area!")
-        adjust_size()
+        // alert("Resizing window will erase byte area!")
+        // adjust_size()
+        log("todo: Resizing window will erase byte area!")
     })
 
     adjust_size()

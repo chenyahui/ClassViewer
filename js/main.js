@@ -103,13 +103,11 @@ function _Main() {
             fileLoader.loadfile(file)
                 .then(function () {
                     showMainArea()
-                    log("结束！！！")
                 }, function (error) {
                     log(error)
                     alert(error)
                 })
                 .then(function () {
-                    log("进入")
                     // always 
                     $(self).val(null)
                     $("#loading-modal").iziModal('close');

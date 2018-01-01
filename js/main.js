@@ -24,15 +24,7 @@ function adjust_size() {
     $("#bytearea").width($("main").width())
 }
 
-function isSupport() {
-    // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
-    return !!window.chrome && !!window.chrome.webstore;
-}
-
 function _Main() {
-    if (!isSupport()) {
-        $("#suggest").css("display", "block")
-    }
     $("#loading-modal").iziModal({
         overlayClose: false,
         closeOnEscape: false,

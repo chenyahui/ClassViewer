@@ -12,7 +12,7 @@ Since it only depends on browser,you can download source code from github, Open 
 ## TODO
 * Show opcode of method 
 * Try to explain every part of classfile
-* Compatible with most browsers
+* Jump by name_index
 
 ## Reference
 * [javap](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javap.html)

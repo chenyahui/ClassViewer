@@ -11,29 +11,28 @@ class ByteAreaPainter {
         this.box_l = 25
 
         this.last_highlight = [0, 0]
-        this.setup(wrapper_sel)
+        this.setup()
     }
 
-    setup(sel) {
-        let ctx = this.ctx
+    resizeCanvas() {
+        let wrapper = this.querysel(this.wrapper_sel)
+        let width = parseInt(wrapper.style.width.slice(0, -2))
+        // let rect = this.querysel(sel).getBoundingClientRect()
 
-        let resizeCanvas = () => {
-            let wrapper = this.querysel(sel)
-            let width =  parseInt(wrapper.style.width.slice(0, -2))
-            // let rect = this.querysel(sel).getBoundingClientRect()
-            // log(rect)
-            this.canvas.width = width - 5
-            this.col = parseInt(this.canvas.width / this.box_l)
-            // log(this.col)
-            let row = Math.ceil(this.data.length / this.col)
+        this.canvas.width = width - 5
+        this.col = parseInt(this.canvas.width / this.box_l)
+        let row = Math.ceil(this.data.length / this.col)
 
-            this.canvas.height = row * this.box_l + 20
-        }
-
-        window.addEventListener('resize', resizeCanvas, false);
-
-        resizeCanvas()
+        this.canvas.height = row * this.box_l + 20
     }
+
+    setup() {
+        this.resizeCanvas()
+        window.addEventListener('resize', () => { 
+            this.draw() 
+        }, false);
+    }
+
     getctx(canvas_sel) {
         let canvas = this.querysel(canvas_sel)
         let ctx = canvas.getContext("2d"); //你的canvas代码在这里
@@ -45,6 +44,7 @@ class ByteAreaPainter {
     }
 
     draw() {
+        log("draw")
         this.drawRange(0, this.data.length)
     }
 

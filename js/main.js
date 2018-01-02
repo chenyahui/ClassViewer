@@ -39,12 +39,6 @@ function _Main() {
         $("#fileInput").trigger("click")
     })
 
-    $(window).resize(function () {
-        // alert("Resizing window will erase byte area!")
-        // adjust_size()
-        log("todo: Resizing window will erase byte area!")
-    })
-
     adjust_size()
 
     let fileLoader = new FileLoader()

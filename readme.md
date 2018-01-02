@@ -10,7 +10,6 @@ Since it only depends on browser,you can download source code from github, Open 
 ![image](example/show.png)
 
 ## TODO
-* Redraw bytecode area when resize window 
 * Show opcode of method 
 * Try to explain every part of classfile
 * Compatible with most browsers

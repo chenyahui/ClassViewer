@@ -18,6 +18,7 @@ class FileLoader {
                 self.buffer = event.target.result
 
                 var klass = new ClassFile(self.buffer.slice(0))
+
                 if (!klass.parse()) {
                     reject("invalid class file")
                 }

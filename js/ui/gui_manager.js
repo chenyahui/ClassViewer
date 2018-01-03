@@ -35,6 +35,7 @@ class GuiManager {
         }
 
         //显示range
-        $("#range").text(`range: [${range[0]}, ${range[1]}]`)
+        let range_value = range[0] == range[1] ?"":`${range[0]}, ${range[1]}`
+        $("#range").text(`range: [${range_value}]`)
     }
 }

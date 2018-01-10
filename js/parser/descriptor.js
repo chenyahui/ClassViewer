@@ -23,7 +23,7 @@ function trans_field_descriptor(descriptor) {
     }
 
     if (descriptor.startsWith("[")) {
-        return trans_descriptor(descriptor.slice(1)) + "[]"
+        return trans_field_descriptor(descriptor.slice(1)) + "[]"
     }
 
     return descriptor

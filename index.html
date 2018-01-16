@@ -10,7 +10,6 @@
     <link href="lib/iziModal/iziModal.min.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
     <link href="css/loading.css" rel="stylesheet">
-
     <script>
         var _hmt = _hmt || [];
         (function () {
@@ -76,25 +75,35 @@
             <a href="https://github.com/chenyahui/ClassViewer" target="_blank" id="gotoGithub">
                 <i class="fa fa-github"></i>
             </a>
-        </header>
-        <div class="wrapper">
-            <aside class="class-info">
-                <ul id="infoTree" class="ztree"></ul>
-            </aside>
-            <main>
-                <div id="bytearea">
-                    <canvas>
-                    </canvas>
-                </div>
-                <div class="statusbar">
-                    <span id="range">click property on left side</span>
-                    <span id="totalCount"></span>
-                </div>
-            </main>
-            <aside class="detail-info">
+            <span id="switch">
+                <input type="radio" name="showtype" value="opcode" />opcode
+                <input type="radio" name="showtype" value="bytecode" />bytecode
+    </div>
+    </header>
+    <div class="wrapper">
+        <aside class="class-info">
+            <ul id="infoTree" class="ztree"></ul>
+        </aside>
 
-            </aside>
-        </div>
+        <main>
+            <div id="bytearea">
+                <canvas>
+                </canvas>
+            </div>
+
+            <div id="opcode">
+                <div id="func_name"></div>
+                <div id="func_code"></div>
+            </div>
+            <div class="statusbar">
+                <span id="range">click property on left side</span>
+                <span id="totalCount"></span>
+            </div>
+        </main>
+        <aside class="detail-info">
+
+        </aside>
+    </div>
     </div>
     <script src="js/check_browser.js"></script>
     <!--lib-->
@@ -112,6 +121,9 @@
     <script src="js/parser/attr_table.js"></script>
     <script src="js/parser/classfile.js"></script>
 
+    <script src="js/instruction/code_reader.js"></script>
+    <script src="js/instruction/instruction_info.js"></script>
+
     <script src="js/ui/byte_painter.js"></script>
     <script src="js/ui/class_to_ztree.js"></script>
     <script src="js/ui/gui_manager.js"></script>
@@ -120,10 +132,7 @@
     <script src="js/main.js"></script>
     <script>
         _Main()
-
-
     </script>
-
 
 </body>
 

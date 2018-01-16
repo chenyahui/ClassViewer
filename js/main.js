@@ -7,6 +7,15 @@ function showIndexArea() {
     $(".mainarea").hide()
     $(".index").show()
 }
+function showOpcode() {
+    $("#bytearea").hide()
+    $("#opcode").show()
+}
+
+function hideOpcode() {
+    $("#bytearea").show()
+    $("#opcode").hide()
+}
 
 function adjust_size() {
 
@@ -20,8 +29,12 @@ function adjust_size() {
 
     let status_h = 50
 
-    $("#bytearea").height(wrapper_height - status_h)
-    $("#bytearea").width($("main").width())
+    let h = wrapper_height - status_h
+    let w = $("main").width()
+    $("#bytearea").height(h)
+    $("#bytearea").width(w)
+    $("#opcode").height(h)
+    $("#opcode").width(w)
 }
 
 function _Main() {
@@ -37,6 +50,13 @@ function _Main() {
 
     $("#changeClass").click(function () {
         $("#fileInput").trigger("click")
+    })
+
+    $("[name=showtype][value=opcode]").click(function(){
+        showOpcode()
+    })
+    $("[name=showtype][value=bytecode]").click(function(){
+        hideOpcode()
     })
 
     adjust_size()

@@ -40,7 +40,6 @@ class FileLoader {
 
     showClass(klass, filename) {
         let painter = new ByteAreaPainter("#bytearea", new Uint8Array(this.buffer))
-
         let show = new GuiManager(painter, klass, "#infoTree", filename)
         show.show()
     }

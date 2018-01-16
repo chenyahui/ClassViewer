@@ -172,3 +172,24 @@ ul.sublist {
 #totalCount{
     float:right;
 }
+
+#opcode {
+    display: none;
+    line-height: 30px;
+    font-size: 14px;
+    padding-left: 50px;
+    overflow-y: scroll;
+    overflow-x: auto;
+}
+
+#switch {
+    display: none;
+}
+
+#func_code {
+    margin-left: 30px;
+}
+
+#func_name{
+    padding-top: 10px;
+}

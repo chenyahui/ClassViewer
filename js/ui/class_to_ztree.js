@@ -83,10 +83,19 @@ class ClassInfoToZtreeNode {
         let attr_table = this.parseAttributes(member.attr_table, member.range[0] + 6)
 
         this.appendArray(children, attr_table)
-        return {
-            name: name,
-            range: member.range,
-            children: children,
+        if (type == "field") {
+            return {
+                name: name,
+                range: member.range,
+                children: children,
+            }
+        } else {
+            return {
+                name: name,
+                range: member.range,
+                children: children,
+                code: member.attr_table.attr_infos[0].bytecode,
+            }
         }
     }
     trans_method_signature(descriptor, name) {

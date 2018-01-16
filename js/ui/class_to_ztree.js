@@ -261,7 +261,7 @@ class ClassInfoToZtreeNode {
 
                     if (Number.isInteger(item_type[1])) {
                         children.push({
-                            name: property + " : " + param,
+                            name: property,
                             range: [start, start + param.length * item_type[1]]
                         })
 

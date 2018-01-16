@@ -48,6 +48,7 @@ class GuiManager {
         $("#range").text(`range: [${range_value}]`)
     }
 
+    // 显示方法字节码
     displayMethod(name, code) {
         name = html2Escape(name.substr(2)) + ":"
 

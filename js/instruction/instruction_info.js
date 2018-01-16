@@ -16,6 +16,12 @@ const Instructions = {
     77: ["astore_2"],
     78: ["astore_3"],
     191: ["athrow"],
+    51: ["baload"],
+    84: ["bastore"],
+    16: ["bipush"],
+    52: ['caload'],
+    85: ['castore'],
+    192: ['checkcast', 2],
     // 
     18: ["ldc", 1],
     68: ["fstore_1"],
@@ -34,7 +40,7 @@ function interpret_code(code) {
     let result = []
     while (true) {
         let tag = reader.read(1)
-        if(tag == false){
+        if (tag == false) {
             break;
         }
         let inst = Instructions[tag]

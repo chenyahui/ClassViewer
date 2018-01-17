@@ -116,7 +116,7 @@ class ClassInfoToZtreeNode {
 
         let children = []
         for (let i = 0; i < interfaces.length; i++) {
-            const index = infos[i];
+            const index = interfaces[i];
 
             let name = this.klass.const_pool.className(index)
             children.push({

@@ -22,6 +22,12 @@ const Instructions = {
     52: ['caload'],
     85: ['castore'],
     192: ['checkcast', 2],
+    144: ['d2f'],
+    142: ['d2i'],
+    143: ['d2l'],
+    99: ['dadd'],
+    49: ['daload'],
+    82: ['dastore'],
     // 
     18: ["ldc", 1],
     68: ["fstore_1"],
@@ -29,7 +35,6 @@ const Instructions = {
     139: ["f2i"],
     61: ["istore_2"],
     177: ["return"],
-    42: ["aload_0"],
     183: ["invokespecial", 2],
 }
 

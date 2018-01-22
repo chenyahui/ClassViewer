@@ -44,7 +44,6 @@ class ByteAreaPainter {
     }
 
     draw() {
-        log("draw")
         this.drawRange(0, this.data.length)
     }
 

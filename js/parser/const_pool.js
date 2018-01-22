@@ -51,7 +51,7 @@ class ConstPool {
 
     getUtf8String(index) {
         let utf8_info = this.const_infos[index]
-        // log(this, index, utf8_info)
+        //log(this, index, utf8_info)
         return utf8_info.asString()
     }
 

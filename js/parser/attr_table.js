@@ -23,8 +23,9 @@ class AttrTable {
         let attr_len = reader.read(4);
 
         let attr_name = const_pool.getUtf8String(attr_name_index)
-
+        
         let attr_info = this.attrInfoFactory(attr_name, const_pool)
+       // log("attr", attr_info)
         if (attr_info == null) {
             attr_info = new AttrUnparsedInfo(attr_name, attr_len, const_pool)
         }
@@ -115,7 +116,10 @@ class ExceptionInfo extends AttrInfo {
         super(null)
 
         this.properties = [
-            2, "constant_value_index",
+            2, "start_pc",
+            2, "end_pc",
+            2, "handler_pc",
+            2, "catch_type",
         ]
     }
 }

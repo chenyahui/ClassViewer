@@ -7,6 +7,9 @@ class ClassFile {
         this.attribute_table = new AttrTable()
     }
 
+    isJavaLangObject(){
+        return this.const_pool.className(this.this_class) == "java/lang/Object"
+    }
     parse() {
         let reader = this.reader
 

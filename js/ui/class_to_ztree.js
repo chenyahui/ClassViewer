@@ -89,7 +89,14 @@ class ClassInfoToZtreeNode {
                 range: member.range,
                 children: children,
             }
-        } else {
+        } else if(AccessFlag.get_method_flag(member.access_flags).includes("native")){
+            return {
+                name: name,
+                range: member.range,
+                children: children,
+            }
+        } else{
+            // console.log(type,name ,member)
             return {
                 name: name,
                 range: member.range,
@@ -97,6 +104,7 @@ class ClassInfoToZtreeNode {
                 code: member.attr_table.attr_infos[0].bytecode,
             }
         }
+            
     }
     trans_method_signature(descriptor, name) {
         let result = trans_method_descriptor(descriptor)
@@ -133,9 +141,13 @@ class ClassInfoToZtreeNode {
     }
     appendClass(type, range) {
         let index = eval(`this.klass.${type}_class`)
-        let name = this.klass.const_pool.className(index)
 
-        this.append(`${type}_class: ${index} -> ${name}`, [], range, "image/classTypeJavaClass.png")
+        if(type == "super" && this.klass.isJavaLangObject()){
+            this.append(`${type}_class: ${index} `, [], range, "image/classTypeJavaClass.png")
+        }else{
+            let name = this.klass.const_pool.className(index)
+            this.append(`${type}_class: ${index} -> ${name}`, [], range, "image/classTypeJavaClass.png")
+        }
     }
 
     append(name, children = [], range = [], icon) {

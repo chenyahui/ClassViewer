@@ -17,6 +17,9 @@ function hideOpcode() {
     $("#opcode").hide()
 }
 
+function changeLoadText(text){
+    $(".loading-text").text(text)
+}
 function adjust_size() {
 
     let window_h = window.innerHeight - 60
@@ -43,12 +46,8 @@ function _Main() {
         closeOnEscape: false,
     })
 
-    $(".uploader").click(function () {
-        $("#fileInput").trigger("click")
-
-    })
-
-    $("#changeClass").click(function () {
+    $(".select-file").click(function () {
+        log("click")
         $("#fileInput").trigger("click")
     })
 
@@ -64,24 +63,17 @@ function _Main() {
     let fileLoader = new FileLoader()
 
     $("#fileInput").change(function () {
+        log("change")
         $("#loading-modal").iziModal('open');
         let self = this
 
         async function loadfile(file) {
-            fileLoader.loadfile(file)
-                .then(function () {
-                    showMainArea()
-                }, function (error) {
-                    log(error)
-                    alert(error)
-                })
-                .then(function () {
-                    // always 
-                    $(self).val(null)
-                    $("#loading-modal").iziModal('close');
-                })
-        }
+            await fileLoader.loadfile(file)
+            showMainArea()
 
+            $(self).val(null)
+            $("#loading-modal").iziModal('close');
+        }
         loadfile(self.files[0])
     })
 }

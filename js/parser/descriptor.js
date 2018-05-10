@@ -29,32 +29,118 @@ function trans_field_descriptor(descriptor) {
     return descriptor
 }
 
-function trans_method_descriptor(descriptor) {
-    let split_index = descriptor.indexOf(")")
+class MethodDescriptor{
+    constructor(descriptor){
+        this.descriptor = descriptor
+        this.offset = 0
+        this.param_types = []
+    }
 
-    let param_types = descriptor.slice(1, split_index)
-    let return_type = descriptor.slice(split_index + 1)
+    parse(){
+        this.startParams()
+        this.parseParamsType()
+        this.endParams()
+        this.parseReturnType()
+        this.finish()
+    }
 
-    let result = [[], trans_field_descriptor(return_type)]
-    let i = 0
-    
-    while (i < param_types.length) {
-        let now = param_types[i]
-
-        if (field_descriptors[now] != undefined) {
-            let basic_type = trans_field_descriptor(now) 
-            result[0].push(basic_type)
-            i++;
-
-        } else if (now == "L" || now == "[") {
-            let comma = param_types.indexOf(";", i)
-            let param = trans_field_descriptor(param_types.slice(i, comma + 1))
-
-            result[0].push(param)
-
-            i = comma+1
+    finish(){
+        if(this.offset != this.descriptor.length){
+            log(this.offset, this.descriptor.length)
+            this.causePanic("finish")
+        }
+    }
+    startParams(){
+        if (this.readchar() != '(') {
+            this.causePanic("start params");
+        }
+    }
+    endParams(){
+        if (this.readchar() != ')') {
+            this.causePanic("end param");
+        }
+    }
+    parseParamsType(){
+        while (true) {
+            let param = this.parseFieldType();
+            if (param == null) {
+                break;
+            }
+            this.param_types.push(param);
         }
     }
 
+    parseFieldType(){
+        let c = this.readchar();
+        switch (c) {
+            case 'B':
+            case 'C':
+            case 'D':
+            case 'F':
+            case 'I':
+            case 'J':
+            case 'S':
+            case 'Z':
+            case 'V':
+                return c;
+            case 'L':
+                return this.parseObjectType();
+            case '[':
+                return this.parseArrayType();
+            default:
+                this.unRead();
+                return null;
+        }
+    }
+    unRead(){
+        this.offset--
+    }
+    parseObjectType(){
+        let arr_start = this.offset - 1;
+        let obj_end = this.descriptor.indexOf(';', this.offset);
+        if (obj_end != -1) {
+            let result = this.descriptor.slice(arr_start, obj_end + 1);
+            this.offset = obj_end + 1;
+            return result;
+        }else{
+            log(-1)
+        }
+        return null;
+    }
+    parseArrayType(){
+        let arr_start = this.offset - 1;
+        this.parseFieldType();
+        let arr_end = this.offset;
+        return this.descriptor.slice(arr_start, arr_end);
+    }
+
+    parseReturnType(){
+        this.return_type = this.parseFieldType();
+
+        if (this.return_type == null) {
+            this.causePanic("return");
+        }
+    }
+    causePanic(msg){
+        log(msg, "错误!", this.descriptor)
+    }
+
+    readchar(){
+        return this.descriptor[this.offset++];
+    }
+}
+// (Ljava/lang/Object;[B)V
+// (Ljava/lang/Class;)Ljava/io/ObjectStreamClass;
+function trans_method_descriptor(descriptor) {
+    let parser = new MethodDescriptor(descriptor)
+
+    parser.parse()
+
+    result = [[]]
+    for(let param of  parser.param_types){
+        result[0].push(trans_field_descriptor(param))
+    }
+
+    result[1] = trans_field_descriptor(parser.return_type)
     return result
 }

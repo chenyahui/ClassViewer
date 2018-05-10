@@ -42,6 +42,9 @@ class ClassInfoToZtreeNode {
         let end = start + 2
         let children = []
         for (let i = 0; i < count; i++) {
+            // if(i > 6){
+            //     log("break")
+            // }
             let member = this.parseMember(members[i], type, i)
             member.icon = `image/${type}.png`
             children.push(member)
@@ -58,11 +61,11 @@ class ClassInfoToZtreeNode {
         let descriptor = member.descriptor_name()
 
         let access_info = eval(`AccessFlag.get_${type}_flag(member.access_flags)`)
-        access_info = access_info.join(" ")
+        let access_info_str = access_info.join(" ")
 
         let signature = eval(`this.trans_${type}_signature(descriptor, name)`)
 
-        name = `${i + 1}. ${access_info} ${signature}`
+        name = `${i + 1}. ${access_info_str} ${signature}`
 
         let children = []
         children.push({
@@ -89,7 +92,7 @@ class ClassInfoToZtreeNode {
                 range: member.range,
                 children: children,
             }
-        } else if(AccessFlag.get_method_flag(member.access_flags).includes("native")){
+        } else if(access_info.includes("native")){
             return {
                 name: name,
                 range: member.range,
@@ -349,8 +352,5 @@ class ClassInfoToZtreeNode {
             arr1.push(item)
         }
     }
-
-
-
 }
 

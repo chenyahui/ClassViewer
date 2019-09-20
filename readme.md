@@ -2,7 +2,8 @@
 
 ClassViewer is a tool for investigating Java class files. It is fully developed using Javascript on browser.
 
-[Blog](http://chenyahui.github.io/2018/01/01/classviewer/)
+[ClassViewer的介绍及实现](http://www.cyhone.com/articles/classviewer/)
+
 ## How To Use
 Since it only depends on browser,you can download source code from github, Open the file in your browser and Enjoy it!
 

@@ -1,7 +1,6 @@
 function isChrome() {
     // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
-    return !!window.chrome && !!window.chrome.webstore;
-}
+    return !!window.chrome
 
 // 检测浏览器是否支持let以及模板字符串
 function isSupport() {

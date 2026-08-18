@@ -56,6 +56,10 @@ function _Main() {
     })
     $("[name=showtype][value=bytecode]").click(function(){
         hideOpcode()
+        // 切换到bytecode视图时，滚动到高亮的方法区域
+        if (window.bytearea_painter) {
+            window.bytearea_painter.scrollTo(window.bytearea_painter.last_highlight[0])
+        }
     })
 
     adjust_size()

@@ -12,6 +12,8 @@ class ByteAreaPainter {
 
         this.last_highlight = [0, 0]
         this.setup()
+        // 保存全局引用，便于在切换视图时滚动到高亮的方法区域
+        window.bytearea_painter = this
     }
 
     resizeCanvas() {
